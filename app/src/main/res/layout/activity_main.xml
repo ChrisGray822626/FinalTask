@@ -1,0 +1,65 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@android:id/tabcontent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!-- 定义第一个标签页的内容 -->
+    <LinearLayout
+        android:id="@+id/tab1"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </LinearLayout>
+    <!-- 定义第二个标签页的内容 -->
+    <LinearLayout
+        android:id="@+id/tab2"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </LinearLayout>
+    <!-- 定义第三个标签页的内容 -->
+    <LinearLayout
+        android:id="@+id/tab3"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:textSize="32sp"
+                android:text="格拉摩根伯爵"
+                />
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/accountPhoto"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:scaleType="fitCenter"
+                app:riv_border_width="2dp"
+                app:riv_border_color="#333333"
+                android:src="@drawable/rnb"
+                app:riv_mutate_background="true"
+                app:riv_oval="true"
+                app:riv_tile_mode="repeat" />
+
+        </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/infoRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+</FrameLayout>
