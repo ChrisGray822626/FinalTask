@@ -1,10 +1,14 @@
-package com.example.chris.finaltask;
+package com.example.chris.finaltask.Adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.chris.finaltask.Class.PersonalInfo;
+import com.example.chris.finaltask.R;
+
 import java.util.List;
 
 public class PersonalInfoAdapter extends RecyclerView.Adapter<PersonalInfoAdapter.ViewHolder> {

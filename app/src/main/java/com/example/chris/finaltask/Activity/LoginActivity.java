@@ -1,4 +1,4 @@
-package com.example.chris.finaltask;
+package com.example.chris.finaltask.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.chris.finaltask.R;
 
 import org.json.JSONObject;
 
@@ -34,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     private String status = "null";
     private String name;
     private String pass;
+    private String password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +65,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 name = UsernameEdit.getText().toString();
                 pass = PasswordEdit.getText().toString();
-                login();
+                if(name.isEmpty()||pass.isEmpty()){
+                    Toast.makeText(LoginActivity.this
+                            ,"用户名或密码不能为空!"
+                            , Toast.LENGTH_SHORT).show();
+                }
+                else
+                    login();
             }
         });
     }
@@ -90,6 +99,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.e("return", "onResponse: " );
                             final String responseData  = response.body().string();
                             Log.d("test",responseData);
+
                             parseStaffJSONObject(responseData);
                         }
                     });
@@ -102,46 +112,44 @@ public class LoginActivity extends AppCompatActivity {
 
     private  void parseStaffJSONObject(String jsonData){
         try{
-            JSONObject jsonObject = new JSONObject(jsonData);
-            final String password = jsonObject.getString("password");
+            final JSONObject jsonObject = new JSONObject(jsonData);
             status = jsonObject.optString("status ");
             Log.d("status",status);
 
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if(name.isEmpty()||pass.isEmpty()){
-                        Toast.makeText(LoginActivity.this
-                                ,"用户名或密码不能为空!"
-                                , Toast.LENGTH_SHORT).show();
-                    }
-                    else if(status == "404"){
-                        Toast.makeText(LoginActivity
-                                        .this,"该用户不存在"
-                                , Toast.LENGTH_SHORT).show();
-                    }
-                    else if(pass.equals(password)){
-                        editor = preferences.edit();
-                        if(remember.isChecked()){
-                            editor.putBoolean("remember_password",true);
-                            editor.putString("password",pass);
-                            editor.putString("username",name);
+                    try {
+                        if (status == "404" || status == "500") {
+                            Toast.makeText(LoginActivity
+                                            .this, "该用户不存在"
+                                    , Toast.LENGTH_SHORT).show();
+                        } else {
+                            password = jsonObject.getString("password");
+                            if (pass.equals(password)) {
+                                editor = preferences.edit();
+                                if (remember.isChecked()) {
+                                    editor.putBoolean("remember_password", true);
+                                    editor.putString("password", pass);
+                                    editor.putString("username", name);
+                                } else {
+                                    editor.clear();
+                                }
+                                editor.apply();
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                intent.putExtra("id", name);
+                                startActivity(intent);
+                                Toast.makeText(LoginActivity.this
+                                        , "登录成功"
+                                        , Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(LoginActivity.this
+                                        , "用户名或密码错误"
+                                        , Toast.LENGTH_SHORT).show();
+                            }
                         }
-                        else{
-                            editor.clear();
-                        }
-                        editor.apply();
-                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                        intent.putExtra("id",name);
-                        startActivity(intent);
-                        Toast.makeText(LoginActivity.this
-                                ,"登录成功"
-                                , Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(LoginActivity.this
-                                ,"用户名或密码错误"
-                                , Toast.LENGTH_SHORT).show();
+                    }catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             });

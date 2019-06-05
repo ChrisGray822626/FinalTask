@@ -1,4 +1,4 @@
-package com.example.chris.finaltask;
+package com.example.chris.finaltask.Class;
 
 public class PersonalInfo {
 
