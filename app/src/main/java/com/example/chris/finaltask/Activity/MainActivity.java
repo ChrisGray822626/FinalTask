@@ -271,7 +271,7 @@ public class MainActivity extends TabActivity
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年MM月dd日");
         String data = "，" + location +
                 "，由于" + origin +
-                "，" + character + "经过" + process +
+                "，" + character + process +
                 "，最终" + result;
         Log.d("data",data);
         FileOutputStream out = null;
@@ -284,7 +284,7 @@ public class MainActivity extends TabActivity
                 writer.write(dateFormat.format(startDate));
             }
             else{
-                writer.write("从" + dateFormat.format(startDate) + "到" + dateFormat.format(endDate));
+                writer.write(dateFormat.format(startDate) + "至" + dateFormat.format(endDate));
             }
             writer.write(data + "。");
         }catch (Exception e) {
